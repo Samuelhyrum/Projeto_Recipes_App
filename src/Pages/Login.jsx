@@ -22,6 +22,9 @@ function Login() {
 
     if (validation.every((item) => item === true)) {
       disabled = false;
+      localStorage.setItem('user', JSON.stringify({ email: loginState.email }));
+      localStorage.setItem('mealsToken', JSON.stringify(1));
+      localStorage.setItem('drinksToken', JSON.stringify(1));
     }
 
     return disabled;

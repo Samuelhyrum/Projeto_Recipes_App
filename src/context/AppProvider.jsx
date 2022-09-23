@@ -4,7 +4,7 @@ import AppContext from './AppContext';
 
 export default function AppProvider({ children }) {
   const contextInfo = {}
-
+   // teste
   return (
     <AppContext.Provider value={ contextInfo }>
       {children}

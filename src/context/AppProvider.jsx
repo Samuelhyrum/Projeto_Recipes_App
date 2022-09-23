@@ -1,10 +1,10 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import AppContext from './AppContext';
 
 export default function AppProvider({ children }) {
-  const contextInfo = {}
-   // teste
+  const contextInfo = {};
+
   return (
     <AppContext.Provider value={ contextInfo }>
       {children}

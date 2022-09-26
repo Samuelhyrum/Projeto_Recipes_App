@@ -4,6 +4,7 @@ import { Route, Switch } from 'react-router-dom';
 import AppProvider from './context/AppProvider';
 import Login from './Pages/Login';
 import Meals from './Pages/Meals';
+import Drinks from './Pages/Drinks';
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
       <Switch>
         <Route exact path="/" component={ Login } />
         <Route exact path="/meals" component={ Meals } />
+        <Route exact path="/drinks" component={ Drinks } />
       </Switch>
     </AppProvider>
   );

@@ -7,9 +7,11 @@ import renderWithRouter from './helpers/renderWithRouter';
 describe('testing requirements from 1 to 6', () => {
   const EMAIL_TEST = 'samuelhymp@gmail.com';
   const PASSOWRD_TEST = '1234567';
+  const pathHome = '/';
 
   test('testing the operation of inputs, button and localStorage data', () => {
-    const { history } = renderWithRouter(<App />);
+    const { history } = renderWithRouter(<App />, { initialEntries: [pathHome],
+    });
 
     const INPUT_EMAIL = screen.getByTestId('email-input');
     const INPUT_PASSOWRD = screen.getByTestId('password-input');
@@ -26,7 +28,6 @@ describe('testing requirements from 1 to 6', () => {
 
     userEvent.click(BUTTON);
 
-    const { pathname } = history.location;
-    expect(pathname).toBe('/meals');
+    expect(history.location.pathname).toBe('/meals');
   });
 });

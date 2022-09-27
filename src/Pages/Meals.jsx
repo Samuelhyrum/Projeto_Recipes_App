@@ -9,7 +9,7 @@ function Meals() {
   return (
     <div>
       <Header title="Meals" />
-      {showSearch && <SearchBar />}
+      {showSearch && <SearchBar title="meals" />}
       <Footer />
     </div>
   );

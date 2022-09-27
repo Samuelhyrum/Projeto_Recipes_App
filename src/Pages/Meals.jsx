@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import Content from '../components/Content';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import SearchBar from '../components/SearchBar';
@@ -10,6 +11,7 @@ function Meals() {
     <div>
       <Header title="Meals" />
       {showSearch && <SearchBar title="meals" />}
+      <Content title="meals" />
       <Footer />
     </div>
   );

@@ -1,14 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
-import { useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
+import AppContext from '../context/AppContext';
 
 function Header({ title }) {
-  const history = useHistory();
+  const { showSearch, setShowSearch } = useContext(AppContext);
 
-  const goToProfile = () => {
-    history.push('/profile');
+  const handleShowSearch = () => {
+    setShowSearch(!showSearch);
   };
 
   return (
@@ -18,27 +19,23 @@ function Header({ title }) {
       >
         {title}
       </h1>
+      { (title === 'Meals' || title === 'Drinks')
+        && (
+          <button type="submit" onClick={ handleShowSearch }>
+            <img
+              data-testid="search-top-btn"
+              src={ searchIcon }
+              alt="searchIcon"
+            />
 
-      <button
-        type="button"
-        onClick={ goToProfile }
-      >
+          </button>)}
+      <Link to="/profile">
         <img
           data-testid="profile-top-btn"
           src={ profileIcon }
           alt="profileIcon"
         />
-
-      </button>
-
-      { title === 'Meals' || title === 'Drinks'
-        ? (
-          <img
-            data-testid="search-top-btn"
-            src={ searchIcon }
-            alt="searchIcon"
-          />)
-        : '' }
+      </Link>
     </header>
   );
 }

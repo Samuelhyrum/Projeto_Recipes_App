@@ -16,6 +16,7 @@ import wine from '../images/wine.svg';
 
 const MAX_CATEGORIES = 4;
 
+// isso aqui depois vai virar um componente só para ícone
 const MEALS_ICONS = [
   cow,
   toast,

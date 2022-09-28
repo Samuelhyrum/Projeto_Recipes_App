@@ -45,7 +45,7 @@ function FilterBar({ title }) {
 
   useEffect(() => {
     fetchCategories();
-  }, []);  // eslint-disable-line
+  }, []); // eslint-disable-line
 
   return (
     <div className="category-container">

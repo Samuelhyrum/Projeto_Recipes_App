@@ -1,0 +1,35 @@
+.header {
+  align-items: center;
+  box-shadow: rgba(0, 0, 0, 0.16) 0 1px 4px;
+  display: flex;
+  height: 3.5rem;
+  justify-content: space-between;
+  padding: 0 15px;
+  width: 100vw;
+}
+
+.title-container {
+  align-items: center;
+  display: flex;
+  font-size: 26px;
+  font-weight: 600;
+  justify-content: space-between;
+  width: 7.5rem;
+}
+
+.title-container img {
+  width: 35px;
+}
+
+.icon-container {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  max-width: 100px;
+}
+
+.icon-container button {
+  background-color: white;
+  border: none;
+  margin-right: 15px;
+}

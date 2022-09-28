@@ -26,3 +26,9 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
+.link {
+  color: black;
+  cursor: pointer;
+  text-decoration: none;
+}

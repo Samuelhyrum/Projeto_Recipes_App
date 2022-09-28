@@ -5,7 +5,7 @@ import AppContext from '../context/AppContext';
 import RecipeCard from './RecipeCard';
 import './Content.css';
 
-const MAX_RECIPES = 11;
+const MAX_RECIPES = 11; // Máximos de receitas renderizados em tela
 function Content({ title }) {
   const { content: recipes } = useContext(AppContext);
   return (

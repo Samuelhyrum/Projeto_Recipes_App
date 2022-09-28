@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import AppContext from '../context/AppContext';
+import './SearchBar.css';
 
 function SearchBar({ title }) {
   const [fields, setFields] = useState({
@@ -25,60 +26,63 @@ function SearchBar({ title }) {
       setFilters(fields);
     }
   };
-  return (
-    <form>
-      <input
-        type="search"
-        name="search"
-        data-testid="search-input"
-        placeholder="Buscar"
-        value={ fields.search }
-        onChange={ handleChange }
-      />
-      <div>
-        <label htmlFor="ingredients">
-          <input
-            type="radio"
-            name="type"
-            id="ingredients"
-            data-testid="ingredient-search-radio"
-            value="ingredients"
-            onChange={ handleChange }
-          />
-          Ingredient
-        </label>
-        <label htmlFor="name">
-          <input
-            type="radio"
-            name="type"
-            id="name"
-            data-testid="name-search-radio"
-            value="name"
-            onChange={ handleChange }
-          />
-          Name
-        </label>
-        <label htmlFor="first letter">
-          <input
-            type="radio"
-            name="type"
-            id="first letter"
-            data-testid="first-letter-search-radio"
-            value="first letter"
-            onChange={ handleChange }
-          />
-          First letter
-        </label>
-      </div>
-      <button
-        type="submit"
-        onClick={ handleClick }
-        data-testid="exec-search-btn"
-      >
-        Filter
 
-      </button>
-    </form>
+  return (
+    <div className="search-container">
+      <form className="search-bar">
+        <input
+          type="search"
+          name="search"
+          data-testid="search-input"
+          placeholder="Buscar"
+          value={ fields.search }
+          onChange={ handleChange }
+        />
+        <div className="radio-container">
+          <label htmlFor="ingredients">
+            <input
+              type="radio"
+              name="type"
+              id="ingredients"
+              data-testid="ingredient-search-radio"
+              value="ingredients"
+              onChange={ handleChange }
+            />
+            Ingredient
+          </label>
+          <label htmlFor="name">
+            <input
+              type="radio"
+              name="type"
+              id="name"
+              data-testid="name-search-radio"
+              value="name"
+              onChange={ handleChange }
+            />
+            Name
+          </label>
+          <label htmlFor="first letter">
+            <input
+              type="radio"
+              name="type"
+              id="first letter"
+              data-testid="first-letter-search-radio"
+              value="first letter"
+              onChange={ handleChange }
+            />
+            First letter
+          </label>
+        </div>
+        <button
+          type="submit"
+          onClick={ handleClick }
+          data-testid="exec-search-btn"
+        >
+          Filter
+
+        </button>
+      </form>
+    </div>
   );
 }
 

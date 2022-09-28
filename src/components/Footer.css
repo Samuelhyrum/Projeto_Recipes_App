@@ -1,5 +1,12 @@
-.fixarRodape {
+footer {
+  align-items: center;
+  background-color: white;
   bottom: 0;
+  display: flex;
+  height: 3.5rem;
+  justify-content: space-between;
   left: 0;
+  padding: 0 15px;
   position: fixed;
+  width: 100vw;
 }

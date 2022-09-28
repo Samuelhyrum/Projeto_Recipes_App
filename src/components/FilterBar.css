@@ -1,0 +1,29 @@
+.category-container {
+  align-items: baseline;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 5px;
+  max-width: 100vw;
+  padding: 5px;
+  width: 100vw;
+}
+
+.buttons-container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.buttons-container button {
+  border-radius: 100%;
+  height: 45px;
+  width: 45px;
+}
+
+.category-name {
+  font-size: 12px;
+  max-width: 55px;
+  text-align: center;
+  word-wrap: break-word;
+}

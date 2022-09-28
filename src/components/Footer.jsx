@@ -34,4 +34,6 @@ function Footer() {
   );
 }
 
+// TODO LEMBRAR DE ZERAR A VARIÁVEL RECIPES NO CONTENT. Está bugando os cards
+
 export default Footer;

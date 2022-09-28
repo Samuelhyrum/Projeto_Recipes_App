@@ -1,12 +1,23 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import Content from '../components/Content';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import SearchBar from '../components/SearchBar';
 import AppContext from '../context/AppContext';
+import { fetchName } from '../services/fetchAPI';
 
 function Meals() {
-  const { showSearch } = useContext(AppContext);
+  const { showSearch, setContent } = useContext(AppContext);
+
+  const fetchData = async () => {
+    const data = await fetchName('', 'meals');
+    setContent(data);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []); // eslint-disable-line
+
   return (
     <div>
       <Header title="Meals" />

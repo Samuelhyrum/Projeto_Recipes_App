@@ -48,18 +48,16 @@ export default function AppProvider({ children }) {
   };
 
   useEffect(() => {
-
-  }, []);
-
-  useEffect(() => {
     fetchData(filters);
   }, [filters]);
 
   const contextInfo = {
     showSearch,
     content,
+    filters,
     setShowSearch,
     setFilters,
+    setContent,
   };
 
   return (

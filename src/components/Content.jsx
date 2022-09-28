@@ -19,7 +19,7 @@ function Content({ title }) {
         if (index <= MAX_RECIPES) {
           return (
             <RecipeCard
-              key={ title === 'meals' ? recipe.idMeal : recipe.idDrink }
+              key={ index }
               type={ title === 'meals' ? 'meal' : 'drink' }
               recipe={ recipe }
               index={ index }

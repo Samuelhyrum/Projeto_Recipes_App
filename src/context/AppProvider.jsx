@@ -12,6 +12,11 @@ export default function AppProvider({ children }) {
     from: '',
   });
   const [content, setContent] = useState([]);
+  const [filteredContent, setFilteredContent] = useState([]);
+  const [activatedCategory, setActivatedCategory] = useState({
+    activated: false,
+    categoryFilter: '',
+  });
 
   const fetchData = async (filter) => {
     let data = '';
@@ -55,9 +60,13 @@ export default function AppProvider({ children }) {
     showSearch,
     content,
     filters,
+    filteredContent,
+    activatedCategory,
     setShowSearch,
     setFilters,
     setContent,
+    setFilteredContent,
+    setActivatedCategory,
   };
 
   return (

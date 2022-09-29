@@ -8,18 +8,7 @@ function Footer() {
   return (
     <footer
       data-testid="footer"
-      className="fixarRodape"
     >
-      <Link
-        to="/drinks"
-      >
-        <img
-          src={ drinks }
-          alt="Drinks"
-          data-testid="drinks-bottom-btn"
-        />
-      </Link>
-
       <Link
         to="/meals"
       >
@@ -27,6 +16,15 @@ function Footer() {
           src={ meals }
           alt="Meals"
           data-testid="meals-bottom-btn"
+        />
+      </Link>
+      <Link
+        to="/drinks"
+      >
+        <img
+          src={ drinks }
+          alt="Drinks"
+          data-testid="drinks-bottom-btn"
         />
       </Link>
 

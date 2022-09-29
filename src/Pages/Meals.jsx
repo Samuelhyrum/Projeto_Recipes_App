@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import Content from '../components/Content';
+import FilterBar from '../components/FilterBar';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import SearchBar from '../components/SearchBar';
@@ -22,6 +23,7 @@ function Meals() {
     <div>
       <Header title="Meals" />
       {showSearch && <SearchBar title="meals" />}
+      <FilterBar title="meals" />
       <Content title="meals" />
       <Footer />
     </div>

@@ -6,28 +6,42 @@ import RecipeCard from './RecipeCard';
 import './Content.css';
 
 const MAX_RECIPES = 11; // Máximos de receitas renderizados em tela
+
 function Content({ title }) {
-  const { content: recipes } = useContext(AppContext);
+  const {
+    content: recipes,
+    filteredContent: filteredRecipe,
+    activatedCategory,
+  } = useContext(AppContext);
+
+  const createElement = (data) => {
+    const recipeCardElement = data.map((recipe, index) => {
+      if (index <= MAX_RECIPES) {
+        return (
+          <RecipeCard
+            key={ index }
+            type={ title === 'meals' ? 'meal' : 'drink' }
+            recipe={ recipe }
+            index={ index }
+          />
+        );
+      }
+      return null;
+    });
+    return recipeCardElement;
+  };
+
   return (
     <div className="cards">
+      { activatedCategory.activated === true && createElement(filteredRecipe)}
+
       { recipes.length === 1 && <Redirect
         to={ title === 'meals'
           ? `/meals/${recipes[0].idMeal}`
           : `/drinks/${recipes[0].idDrink}` }
       /> }
-      {recipes.map((recipe, index) => {
-        if (index <= MAX_RECIPES) {
-          return (
-            <RecipeCard
-              key={ index }
-              type={ title === 'meals' ? 'meal' : 'drink' }
-              recipe={ recipe }
-              index={ index }
-            />
-          );
-        }
-        return null;
-      })}
+      {createElement(recipes)}
+
     </div>
   );
 }

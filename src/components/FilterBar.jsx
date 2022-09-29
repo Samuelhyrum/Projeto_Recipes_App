@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import PropTypes from 'prop-types';
-import { fetchFilterByCategories } from '../services/fetchAPI';
+import { fetchFilterByCategories, fetchFilteredContent } from '../services/fetchAPI';
 import './FilterBar.css';
+
+// importação de imagens
 import beerSolid from '../images/beer_solid.svg';
 import chicken from '../images/chicken.svg';
 import cocktail from '../images/cocktail.svg';
@@ -13,6 +15,7 @@ import sheep from '../images/sheep.svg';
 import shortcake from '../images/shortcake.svg';
 import toast from '../images/toast.svg';
 import wine from '../images/wine.svg';
+import AppContext from '../context/AppContext';
 
 const MAX_CATEGORIES = 4;
 
@@ -35,6 +38,11 @@ const DRINKS_ICONS = [
 
 function FilterBar({ title }) {
   const [categories, setCategories] = useState([]);
+  const {
+    activatedCategory,
+    setFilteredContent,
+    setActivatedCategory,
+  } = useContext(AppContext);
 
   const titlePage = title;
 
@@ -43,12 +51,46 @@ function FilterBar({ title }) {
     setCategories(data);
   };
 
+  const filterByCategory = async (category) => {
+    const data = await fetchFilteredContent(category, title);
+    setFilteredContent(data);
+    setActivatedCategory({
+      activated: true,
+      categoryFilter: category,
+    });
+    if (activatedCategory.activated && activatedCategory.categoryFilter === category) {
+      setActivatedCategory({
+        activated: false,
+        categoryFilter: '',
+      });
+    } else {
+      setActivatedCategory({
+        activated: true,
+        categoryFilter: category,
+      });
+    }
+  };
+
+  const clearFilter = () => {
+    setActivatedCategory({
+      activated: false,
+      categoryFilter: '',
+    });
+  };
+
   useEffect(() => {
     fetchCategories();
   }, []); // eslint-disable-line
 
   return (
     <div className="category-container">
+      <button
+        data-testid="All-category-filter"
+        type="button"
+        onClick={ clearFilter }
+      >
+        All
+      </button>
       {categories.map((category, index) => {
         if (index <= MAX_CATEGORIES) {
           return (
@@ -59,6 +101,7 @@ function FilterBar({ title }) {
               <button
                 data-testid={ `${category.strCategory}-category-filter` }
                 type="button"
+                onClick={ () => filterByCategory(category.strCategory) }
               >
                 {titlePage === 'meals' ? <img src={ MEALS_ICONS[index] } alt="" />
                   : <img src={ DRINKS_ICONS[index] } alt="" /> }

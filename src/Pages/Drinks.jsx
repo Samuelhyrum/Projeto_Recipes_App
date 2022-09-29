@@ -13,7 +13,6 @@ function Drinks() {
   const fetchData = async () => {
     const data = await fetchName('', 'drinks');
     setContent(data);
-    console.log(data);
   };
   useEffect(() => {
     fetchData();

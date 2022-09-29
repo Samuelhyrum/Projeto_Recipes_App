@@ -1,0 +1,32 @@
+.email-container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.btn-profile-container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  font-size: 18px;
+  gap: 20px;
+  justify-content: center;
+  margin-top: 50px;
+  width: 100vw;
+}
+
+.btn-profile-container button {
+  border: none;
+}
+
+.email-container img {
+  width: 60px;
+}
+
+.btn-profile-container button img {
+  margin-right: 10px;
+  width: 30px;
+}

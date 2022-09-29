@@ -58,21 +58,4 @@ describe('testing requirement 20-23', () => {
 
     await waitFor(() => expect(link).not.toBeInTheDocument());
   });
-  //   test('test clicks on category buttons, ALL BUTTON', async () => {
-  //     const { history } = renderWithRouter(<App />, { initialEntries: [pathDrinks],
-  //     });
-  //     const anotherButton = await screen.findByTestId('Ordinary Drink');
-
-  //     expect(anotherButton).toBeInTheDocument();
-
-  //     userEvent.click(anotherButton);
-
-  //     const link = await screen.findByText('Ace');
-
-  //     expect(link).toBeInTheDocument();
-
-  //     userEvent.click(link);
-
-//     await waitFor(() => expect(history.location.pathname).toBe('/drinks/17225'));
-//   });
 });

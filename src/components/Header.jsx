@@ -15,10 +15,19 @@ function Header({ title }) {
     setShowSearch(!showSearch);
   };
 
+  let imageTitle = '';
+  if (title === 'Meals') {
+    imageTitle = mealIcon;
+  } else if (title === 'Drinks') {
+    imageTitle = drinkIcon;
+  } else {
+    imageTitle = '';
+  }
+
   return (
     <header className="header">
       <div className="title-container">
-        <img src={ title === 'Meals' ? mealIcon : drinkIcon } alt="" />
+        <img src={ imageTitle } alt="" />
         <div
           data-testid="page-title"
         >

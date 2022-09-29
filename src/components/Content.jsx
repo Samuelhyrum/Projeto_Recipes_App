@@ -33,14 +33,14 @@ function Content({ title }) {
 
   return (
     <div className="cards">
-      { activatedCategory.activated === true && createElement(filteredRecipe)}
+      { activatedCategory.activated === true
+        ? createElement(filteredRecipe) : createElement(recipes)}
 
       { recipes.length === 1 && <Redirect
         to={ title === 'meals'
           ? `/meals/${recipes[0].idMeal}`
           : `/drinks/${recipes[0].idDrink}` }
       /> }
-      {createElement(recipes)}
 
     </div>
   );

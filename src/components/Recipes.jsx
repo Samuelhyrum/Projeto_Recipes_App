@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { fetchFilterByCategories, fetchFilteredContent } from '../services/fetchAPI';
-import './FilterBar.css';
+import './Recipes.css';
 
 // importação de imagens
 import beerSolid from '../images/beer_solid.svg';
@@ -36,7 +36,7 @@ const DRINKS_ICONS = [
   coffee,
 ];
 
-function FilterBar({ title }) {
+function Recipes({ title }) {
   const [categories, setCategories] = useState([]);
   const {
     activatedCategory,
@@ -122,8 +122,8 @@ function FilterBar({ title }) {
   );
 }
 
-FilterBar.propTypes = {
+Recipes.propTypes = {
   title: PropTypes.string,
 }.isRequired;
 
-export default FilterBar;
+export default Recipes;

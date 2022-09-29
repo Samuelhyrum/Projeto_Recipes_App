@@ -18,6 +18,12 @@ export default function AppProvider({ children }) {
     categoryFilter: '',
   });
 
+  const getEmail = () => {
+    if (!localStorage.getItem('user')) {
+      localStorage.setItem('user', JSON.stringify({ email: '' }));
+    }
+  };
+
   const fetchData = async (filter) => {
     let data = '';
     switch (filter.type) {
@@ -55,6 +61,10 @@ export default function AppProvider({ children }) {
   useEffect(() => {
     fetchData(filters);
   }, [filters]);
+
+  useEffect(() => {
+    getEmail();
+  }, []);
 
   const contextInfo = {
     showSearch,

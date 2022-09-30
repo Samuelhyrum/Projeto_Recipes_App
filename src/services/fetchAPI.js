@@ -5,6 +5,7 @@ const endPoints = {
   filtersMeals: '/api/json/v1/1/list.php?c=list',
   filtersDrinks: '/api/json/v1/1/list.php?c=list',
   filteredByCategory: '/api/json/v1/1/filter.php?c=',
+  details: '/api/json/v1/1/lookup.php?i=',
 };
 const API = {
   meals: 'https://www.themealdb.com',
@@ -62,6 +63,17 @@ export const fetchFilteredContent = async (search, from) => {
     return data.meals;
   }
   const response = await fetch(`${API.drinks}${endPoints.filteredByCategory}${search}`);
+  const data = await response.json();
+  return data.drinks;
+};
+
+export const fetchDetails = async (id, from) => {
+  if (from === 'meals') {
+    const response = await fetch(`${API.meals}${endPoints.details}${id}`);
+    const data = await response.json();
+    return data.meals;
+  }
+  const response = await fetch(`${API.drinks}${endPoints.details}${id}`);
   const data = await response.json();
   return data.drinks;
 };

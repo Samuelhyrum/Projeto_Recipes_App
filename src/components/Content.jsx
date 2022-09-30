@@ -23,6 +23,8 @@ function Content({ title }) {
             type={ title === 'meals' ? 'meal' : 'drink' }
             recipe={ recipe }
             index={ index }
+            cardTestId={ `${index}-recipe-card` }
+            titleTestId={ `$${index}-card-name` }
           />
         );
       }

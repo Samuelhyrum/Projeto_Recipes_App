@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import './RecipeCard.css';
 import { Link } from 'react-router-dom';
 
-function RecipeCard({ type, recipe, index }) {
+function RecipeCard({ type, recipe, index, cardTestId, titleTestId }) {
   return (
     <div
-      data-testid={ `${index}-recipe-card` }
+      data-testid={ cardTestId }
       className="card-container"
     >
       <Link
@@ -22,7 +22,7 @@ function RecipeCard({ type, recipe, index }) {
         <div className="name-container">
           <div
             className="name"
-            data-testid={ `${index}-card-name` }
+            data-testid={ titleTestId }
           >
             { type === 'meal' ? recipe.strMeal : recipe.strDrink }
           </div>
@@ -36,6 +36,8 @@ RecipeCard.propTypes = {
   type: PropTypes.string,
   index: PropTypes.number,
   recipe: PropTypes.shape(),
+  cardTestId: PropTypes.string,
+  titleTestId: PropTypes.string,
 }.isRequired;
 
 export default RecipeCard;

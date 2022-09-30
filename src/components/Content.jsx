@@ -43,6 +43,7 @@ function Content({ title }) {
           ? `/meals/${recipes[0].idMeal}`
           : `/drinks/${recipes[0].idDrink}` }
       /> }
+
     </div>
   );
 }

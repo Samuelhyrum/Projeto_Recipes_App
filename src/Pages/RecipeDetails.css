@@ -7,3 +7,7 @@
   padding: 0 20px 10px 10px;
   scroll-behavior: smooth;
 }
+
+[ data-testid = 'recipe-photo' ] {
+  width: 360px;
+}

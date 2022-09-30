@@ -24,7 +24,7 @@ function Content({ title }) {
             recipe={ recipe }
             index={ index }
             cardTestId={ `${index}-recipe-card` }
-            titleTestId={ `$${index}-card-name` }
+            titleTestId={ `${index}-card-name` }
           />
         );
       }

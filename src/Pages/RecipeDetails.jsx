@@ -28,10 +28,18 @@ function RecipeDetails({ match: { path, params: { id } } }) {
   const getMeasures = () => Object.keys(recipeDetails)
     .filter((key) => key.includes('Measure'));
 
-  useEffect(() => {
+  const update = () => {
     getRecipeDetails();
     getRecomendations();
     setLocal(path.split('/')[1]);
+  };
+
+  useEffect(() => {
+    update();
+  }, [path, id]); // eslint-disable-line
+
+  useEffect(() => {
+    update();
   }, []); // eslint-disable-line
   return (
     <div>

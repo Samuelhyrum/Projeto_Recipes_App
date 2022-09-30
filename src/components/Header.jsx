@@ -20,14 +20,13 @@ function Header({ title }) {
     imageTitle = mealIcon;
   } else if (title === 'Drinks') {
     imageTitle = drinkIcon;
-  } else {
-    imageTitle = '';
   }
 
   return (
     <header className="header">
       <div className="title-container">
-        <img src={ imageTitle } alt="" />
+        {(title !== 'Meals' && title !== 'Drinks') ? ''
+          : <img src={ imageTitle } alt="" />}
         <div
           data-testid="page-title"
         >

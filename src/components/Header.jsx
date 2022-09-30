@@ -25,7 +25,7 @@ function Header({ title }) {
   return (
     <header className="header">
       <div className="title-container">
-        {(title !== 'Meals' || title !== 'Drinks') ? ''
+        {(title !== 'Meals' && title !== 'Drinks') ? ''
           : <img src={ imageTitle } alt="" />}
         <div
           data-testid="page-title"

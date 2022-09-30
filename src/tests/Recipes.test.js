@@ -1,12 +1,11 @@
 import React from 'react';
-import { screen, waitFor } from '@testing-library/react';
+import { getNodeText, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from '../App';
 import renderWithRouter from './helpers/renderWithRouter';
 
 describe('testing requirement 20-23', () => {
   const pathMeals = '/meals';
-  //   const pathDrinks = '/drinks';
   test('test clicks on category buttons', async () => {
     const { history } = renderWithRouter(<App />, { initialEntries: [pathMeals],
     });
@@ -37,7 +36,9 @@ describe('testing requirement 20-23', () => {
 
     userEvent.click(anotherButton);
 
-    await waitFor(() => expect(link).not.toBeInTheDocument());
+    const id = await screen.findByTestId('0-card-name');
+
+    expect(id).toBeInTheDocument();
   });
   test('test clicks on category buttons, ALL BUTTON', async () => {
     renderWithRouter(<App />, { initialEntries: [pathMeals],
@@ -56,6 +57,10 @@ describe('testing requirement 20-23', () => {
 
     userEvent.click(ALL_BUTTON);
 
-    await waitFor(() => expect(link).not.toBeInTheDocument());
+    const id = await screen.findByTestId('0-card-name');
+
+    expect(id).toBeInTheDocument();
+
+    expect(getNodeText(id)).toBe('Corba');
   });
 });

@@ -6,6 +6,9 @@ import { fetchFirstLetter, fetchIngrediets, fetchName } from '../services/fetchA
 const ERROR_MESSAGE = 'Sorry, we haven\'t found any recipes for these filters.';
 export default function AppProvider({ children }) {
   const [showSearch, setShowSearch] = useState(false);
+  const [doneRecipes, setDoneRecipes] = useState([]);
+  const [savedFavorites, setSavedFavorites] = useState([]);
+  const [inProgressRecipes, setInProgressRecipes] = useState({ drinks: {}, meals: {} });
   const [filters, setFilters] = useState({
     search: '',
     type: '',
@@ -58,6 +61,26 @@ export default function AppProvider({ children }) {
     }
   };
 
+  useEffect(() => {
+    if (!localStorage.getItem('doneRecipes')) {
+      localStorage.setItem('doneRecipes', JSON.stringify([]));
+    } else {
+      setDoneRecipes(JSON.parse(localStorage.getItem('doneRecipes')));
+    }
+    if (!localStorage.getItem('favoriteRecipes')) {
+      localStorage.setItem('favoriteRecipes', JSON.stringify([]));
+    } else {
+      setSavedFavorites(JSON.parse(localStorage.getItem('favoriteRecipes')));
+    }
+    if (!localStorage.getItem('inProgressRecipes')) {
+      localStorage.setItem('inProgressRecipes', JSON
+        .stringify({ drinks: {}, meals: {} }));
+    } else {
+      const x = JSON.parse(localStorage.getItem('inProgressRecipes'));
+      setInProgressRecipes(x);
+    }
+  }, []); // eslint-disable-line
+
   // preparar o objeto pra salvar no local storage
   const objectToFavorite = (local, recipeDetails, id) => {
     const type = local === 'meals' ? 'meal' : 'drink';
@@ -102,6 +125,9 @@ export default function AppProvider({ children }) {
     setFilteredContent,
     setActivatedCategory,
     objectToFavorite,
+    doneRecipes,
+    savedFavorites,
+    inProgressRecipes,
   };
 
   return (

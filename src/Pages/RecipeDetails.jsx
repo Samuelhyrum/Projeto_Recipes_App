@@ -22,12 +22,13 @@ function RecipeDetails({ match: { path, params: { id } } }) {
   const [local, setLocal] = useState('');
 
   const [visible, setVisible] = useState(true);
-  const [doneRecipes, setDoneRecipes] = useState([]);
+  const [continueRecipe, setContinueRecipe] = useState(false);
   const [favorite, setFavorite] = useState(false);
-  const [savedFavorites, setSavedFavorites] = useState([]);
   const [copied, setCopied] = useState();
 
-  const { objectToFavorite } = useContext(AppContext);
+  const { objectToFavorite, doneRecipes,
+    savedFavorites,
+    inProgressRecipes } = useContext(AppContext);
 
   const history = useHistory();
 
@@ -79,16 +80,6 @@ function RecipeDetails({ match: { path, params: { id } } }) {
 
   useEffect(() => {
     update();
-    if (!localStorage.getItem('doneRecipes')) {
-      localStorage.setItem('doneRecipes', JSON.stringify([]));
-    } else {
-      setDoneRecipes(JSON.parse(localStorage.getItem('doneRecipes')));
-    }
-    if (!localStorage.getItem('favoriteRecipes')) {
-      localStorage.setItem('favoriteRecipes', JSON.stringify([]));
-    } else {
-      setSavedFavorites(JSON.parse(localStorage.getItem('favoriteRecipes')));
-    }
   }, [path, id]); // eslint-disable-line
 
   useEffect(() => {
@@ -99,6 +90,15 @@ function RecipeDetails({ match: { path, params: { id } } }) {
   }, [doneRecipes]); // eslint-disable-line
 
   useEffect(() => {
+    if (inProgressRecipes[local] ? Object.keys(inProgressRecipes[local])
+      .includes(id) : false) {
+      setContinueRecipe(true);
+    } else {
+      setContinueRecipe(false);
+    }
+  }, [inProgressRecipes]); // eslint-disable-line
+
+  useEffect(() => {
     if (savedFavorites.some((recipe) => recipe.id === id)) {
       setFavorite(true);
     } else {
@@ -107,6 +107,7 @@ function RecipeDetails({ match: { path, params: { id } } }) {
   }, [savedFavorites]); // eslint-disable-line
 
   const handleClick = () => {
+    history.push(`/${local}/${id}/in-progress`);
   };
 
   return (
@@ -212,10 +213,11 @@ function RecipeDetails({ match: { path, params: { id } } }) {
           data-testid="start-recipe-btn"
           onClick={ handleClick }
         >
-          Start Recipe
+          {
+            continueRecipe ? 'Continue Recipe' : 'Start Recipe'
+          }
         </button>
       ) : ''}
-
     </div>
   );
 }
@@ -230,5 +232,3 @@ RecipeDetails.propTypes = {
 }.isRequired;
 
 export default RecipeDetails;
-
-// só pra rodar de novo cy do github

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import copy from 'clipboard-copy';
@@ -12,7 +12,6 @@ import arrowLeftIcon from '../images/arrow-left.svg';
 import shareIcon from '../images/share.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
-import { useContext } from 'react';
 import AppContext from '../context/AppContext';
 
 const MAX_RECOMENDATIONS = 6;

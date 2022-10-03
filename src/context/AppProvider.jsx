@@ -58,6 +58,30 @@ export default function AppProvider({ children }) {
     }
   };
 
+  // preparar o objeto pra salvar no local storage
+  const objectToFavorite = (local, recipeDetails, id) => {
+    const type = local === 'meals' ? 'meal' : 'drink';
+    const nationality = recipeDetails.strArea || '';
+    const category = recipeDetails.strCategory || '';
+    const alcoholicOrNot = recipeDetails.strAlcoholic || '';
+    const name = local === 'meals'
+      ? recipeDetails.strMeal
+      : recipeDetails.strDrink;
+    const image = local === 'meals'
+      ? recipeDetails.strMealThumb
+      : recipeDetails.strDrinkThumb;
+
+    return {
+      id,
+      type,
+      nationality,
+      category,
+      alcoholicOrNot,
+      name,
+      image,
+    };
+  };
+
   useEffect(() => {
     fetchData(filters);
   }, [filters]);
@@ -77,6 +101,7 @@ export default function AppProvider({ children }) {
     setContent,
     setFilteredContent,
     setActivatedCategory,
+    objectToFavorite,
   };
 
   return (

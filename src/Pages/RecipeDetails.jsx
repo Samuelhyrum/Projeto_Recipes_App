@@ -230,3 +230,5 @@ RecipeDetails.propTypes = {
 }.isRequired;
 
 export default RecipeDetails;
+
+// só pra rodar de novo cy do github

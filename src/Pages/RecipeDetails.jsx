@@ -6,6 +6,7 @@ import { fetchDetails, fetchName } from '../services/fetchAPI';
 import VideoComponent from '../components/VideoComponent';
 import RecipeCard from '../components/RecipeCard';
 import './RecipeDetails.css';
+// import DoneRecipes from './DoneRecipes';
 
 import arrowLeftIcon from '../images/arrow-left.svg';
 import shareIcon from '../images/share.svg';
@@ -18,6 +19,9 @@ function RecipeDetails({ match: { path, params: { id } } }) {
   const [recipeDetails, setRecipeDetails] = useState([]);
   const [recomendations, setRecomendations] = useState([]);
   const [local, setLocal] = useState('');
+
+  const [visible, setVisible] = useState(true);
+  const [doneRecipes, setDoneRecipes] = useState([]);
   const [favorite, setFavorite] = useState(false);
   const [copied, setCopied] = useState();
 
@@ -95,11 +99,38 @@ function RecipeDetails({ match: { path, params: { id } } }) {
 
   useEffect(() => {
     update();
+    if (!localStorage.getItem('doneRecipes')) {
+      localStorage.setItem('doneRecipes', JSON.stringify([]));
+    } else {
+      setDoneRecipes(JSON.parse(localStorage.getItem('doneRecipes')));
+    }
+  }, [path, id]); // eslint-disable-line
+
+  useEffect(() => {
+    update();
     if (!localStorage.getItem('favoriteRecipes')) {
       localStorage.setItem('favoriteRecipes', JSON.stringify([]));
     }
   }, [path, id]); // eslint-disable-line
 
+  useEffect(() => {
+    if (doneRecipes
+      .map((recipe) => +recipe.id).includes(+id)) {
+      setVisible(false);
+    } else setVisible(true);
+  }, [doneRecipes]); // eslint-disable-line
+
+  const handleClick = () => {
+    // setVisible((current) => !current);
+    // const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
+    // localStorage.setItem([...doneRecipes, {
+    //   id,
+    //   type: path.slice(0, -1),
+    //   nationality: recipeDetails.strArea,
+    //   category: recipeDetails.strCategory,
+
+    // }]);
+  };
   return (
     <div>
       <img
@@ -194,6 +225,17 @@ function RecipeDetails({ match: { path, params: { id } } }) {
           })}
         </section>
       </section>
+      {visible ? (
+        <button
+          type="button"
+          className={ visible ? 'visible' : 'hidden' }
+          data-testid="start-recipe-btn"
+          onClick={ handleClick }
+        >
+          Start Recipe
+        </button>
+      ) : ''}
+
     </div>
   );
 }

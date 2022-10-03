@@ -8,6 +8,14 @@
   scroll-behavior: smooth;
 }
 
+.visible {
+  bottom: 0;
+  position: fixed;
+}
+
+.hidden {
+  visibility: hidden;
+
 [ data-testid = 'recipe-photo' ] {
   width: 360px;
 }

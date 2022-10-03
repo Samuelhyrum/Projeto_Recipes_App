@@ -12,6 +12,8 @@ import arrowLeftIcon from '../images/arrow-left.svg';
 import shareIcon from '../images/share.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
+import { useContext } from 'react';
+import AppContext from '../context/AppContext';
 
 const MAX_RECOMENDATIONS = 6;
 
@@ -23,33 +25,12 @@ function RecipeDetails({ match: { path, params: { id } } }) {
   const [visible, setVisible] = useState(true);
   const [doneRecipes, setDoneRecipes] = useState([]);
   const [favorite, setFavorite] = useState(false);
+  const [savedFavorites, setSavedFavorites] = useState([]);
   const [copied, setCopied] = useState();
 
+  const { objectToFavorite } = useContext(AppContext);
+
   const history = useHistory();
-
-  // preparar o objeto pra salvar no local storage
-  const objectToFavorite = () => {
-    const type = local === 'meals' ? 'meal' : 'drink';
-    const nationality = recipeDetails.strArea || '';
-    const category = recipeDetails.strCategory || '';
-    const alcoholicOrNot = recipeDetails.strAlcoholic || '';
-    const name = local === 'meals'
-      ? recipeDetails.strMeal
-      : recipeDetails.strDrink;
-    const image = local === 'meals'
-      ? recipeDetails.strMealThumb
-      : recipeDetails.strDrinkThumb;
-
-    return {
-      id,
-      type,
-      nationality,
-      category,
-      alcoholicOrNot,
-      name,
-      image,
-    };
-  };
 
   const getRecipeDetails = async () => {
     const data = await fetchDetails(id, path.split('/')[1]);
@@ -93,7 +74,7 @@ function RecipeDetails({ match: { path, params: { id } } }) {
       setFavorite(!favorite);
       const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
       localStorage.setItem('favoriteRecipes', JSON
-        .stringify([...favoriteRecipes, (objectToFavorite())]));
+        .stringify([...favoriteRecipes, (objectToFavorite(local, recipeDetails, id))]));
     }
   };
 
@@ -104,12 +85,10 @@ function RecipeDetails({ match: { path, params: { id } } }) {
     } else {
       setDoneRecipes(JSON.parse(localStorage.getItem('doneRecipes')));
     }
-  }, [path, id]); // eslint-disable-line
-
-  useEffect(() => {
-    update();
     if (!localStorage.getItem('favoriteRecipes')) {
       localStorage.setItem('favoriteRecipes', JSON.stringify([]));
+    } else {
+      setSavedFavorites(JSON.parse(localStorage.getItem('favoriteRecipes')));
     }
   }, [path, id]); // eslint-disable-line
 
@@ -120,17 +99,17 @@ function RecipeDetails({ match: { path, params: { id } } }) {
     } else setVisible(true);
   }, [doneRecipes]); // eslint-disable-line
 
-  const handleClick = () => {
-    // setVisible((current) => !current);
-    // const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
-    // localStorage.setItem([...doneRecipes, {
-    //   id,
-    //   type: path.slice(0, -1),
-    //   nationality: recipeDetails.strArea,
-    //   category: recipeDetails.strCategory,
+  useEffect(() => {
+    if (savedFavorites.some((recipe) => recipe.id === id)) {
+      setFavorite(true);
+    } else {
+      setFavorite(false);
+    }
+  }, [savedFavorites]); // eslint-disable-line
 
-    // }]);
+  const handleClick = () => {
   };
+
   return (
     <div>
       <img
@@ -168,9 +147,11 @@ function RecipeDetails({ match: { path, params: { id } } }) {
             type="button"
             onClick={ btnFavoriteRecipe }
           >
-            { !favorite
-              ? <img src={ whiteHeartIcon } alt="shareIcon" data-testid="favorite-btn" />
-              : <img src={ blackHeartIcon } alt="shareIcon" data-testid="favorite-btn" />}
+            <img
+              src={ favorite ? blackHeartIcon : whiteHeartIcon }
+              alt="shareIcon"
+              data-testid="favorite-btn"
+            />
           </button>
         </div>
       </section>

@@ -1,18 +1,55 @@
 import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import copy from 'clipboard-copy';
 import { fetchDetails, fetchName } from '../services/fetchAPI';
 import VideoComponent from '../components/VideoComponent';
 import RecipeCard from '../components/RecipeCard';
 import './RecipeDetails.css';
 // import DoneRecipes from './DoneRecipes';
 
+import arrowLeftIcon from '../images/arrow-left.svg';
+import shareIcon from '../images/share.svg';
+import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
+
 const MAX_RECOMENDATIONS = 6;
+
 function RecipeDetails({ match: { path, params: { id } } }) {
   const [recipeDetails, setRecipeDetails] = useState([]);
   const [recomendations, setRecomendations] = useState([]);
   const [local, setLocal] = useState('');
+
   const [visible, setVisible] = useState(true);
   const [doneRecipes, setDoneRecipes] = useState([]);
+  const [favorite, setFavorite] = useState(false);
+  const [copied, setCopied] = useState();
+
+  const history = useHistory();
+
+  // preparar o objeto pra salvar no local storage
+  const objectToFavorite = () => {
+    const type = local === 'meals' ? 'meal' : 'drink';
+    const nationality = recipeDetails.strArea || '';
+    const category = recipeDetails.strCategory || '';
+    const alcoholicOrNot = recipeDetails.strAlcoholic || '';
+    const name = local === 'meals'
+      ? recipeDetails.strMeal
+      : recipeDetails.strDrink;
+    const image = local === 'meals'
+      ? recipeDetails.strMealThumb
+      : recipeDetails.strDrinkThumb;
+
+    return {
+      id,
+      type,
+      nationality,
+      category,
+      alcoholicOrNot,
+      name,
+      image,
+    };
+  };
 
   const getRecipeDetails = async () => {
     const data = await fetchDetails(id, path.split('/')[1]);
@@ -37,6 +74,29 @@ function RecipeDetails({ match: { path, params: { id } } }) {
     setLocal(path.split('/')[1]);
   };
 
+  const goBack = () => {
+    history.goBack();
+  };
+
+  const copyLinkToShare = () => {
+    copy(`http://localhost:3000${history.location.pathname}`);
+    setCopied(true);
+  };
+
+  const btnFavoriteRecipe = () => {
+    if (favorite) {
+      setFavorite(!favorite);
+      const savedRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+      const deleteRecipe = savedRecipes.filter((recipe) => +recipe.id !== +id);
+      localStorage.setItem('favoriteRecipes', JSON.stringify(deleteRecipe));
+    } else {
+      setFavorite(!favorite);
+      const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+      localStorage.setItem('favoriteRecipes', JSON
+        .stringify([...favoriteRecipes, (objectToFavorite())]));
+    }
+  };
+
   useEffect(() => {
     update();
     if (!localStorage.getItem('doneRecipes')) {
@@ -51,7 +111,7 @@ function RecipeDetails({ match: { path, params: { id } } }) {
       .map((recipe) => +recipe.id).includes(+id)) {
       setVisible(false);
     } else setVisible(true);
-  }, [doneRecipes]);// eslint-disable-line
+  }, [doneRecipes]); // eslint-disable-line
 
   const handleClick = () => {
     // setVisible((current) => !current);
@@ -65,6 +125,11 @@ function RecipeDetails({ match: { path, params: { id } } }) {
     // }]);
   };
 
+    if (!localStorage.getItem('favoriteRecipes')) {
+      localStorage.setItem('favoriteRecipes', JSON.stringify([]));
+    }
+  }, [path, id]); // eslint-disable-line
+  
   return (
     <div>
       <img
@@ -72,6 +137,43 @@ function RecipeDetails({ match: { path, params: { id } } }) {
         alt={ recipeDetails[local === 'meals' ? 'strMeal' : 'strDrink'] }
         data-testid="recipe-photo"
       />
+
+      <section>
+        <div>
+          <button
+            type="button"
+            onClick={ goBack }
+          >
+            <img src={ arrowLeftIcon } alt="back icon" />
+          </button>
+        </div>
+
+        <div>
+          {
+            copied
+              ? <p>Link copied!</p>
+              : (
+                <button
+                  type="button"
+                  data-testid="share-btn"
+                  onClick={ copyLinkToShare }
+                >
+                  <img src={ shareIcon } alt="share icon" />
+                </button>)
+          }
+        </div>
+        <div>
+          <button
+            type="button"
+            onClick={ btnFavoriteRecipe }
+          >
+            { !favorite
+              ? <img src={ whiteHeartIcon } alt="shareIcon" data-testid="favorite-btn" />
+              : <img src={ blackHeartIcon } alt="shareIcon" data-testid="favorite-btn" />}
+          </button>
+        </div>
+      </section>
+
       <section>
         <hr />
         <div>

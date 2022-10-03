@@ -15,4 +15,7 @@
 
 .hidden {
   visibility: hidden;
+
+[ data-testid = 'recipe-photo' ] {
+  width: 360px;
 }

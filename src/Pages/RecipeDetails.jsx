@@ -107,6 +107,13 @@ function RecipeDetails({ match: { path, params: { id } } }) {
   }, [path, id]); // eslint-disable-line
 
   useEffect(() => {
+    update();
+    if (!localStorage.getItem('favoriteRecipes')) {
+      localStorage.setItem('favoriteRecipes', JSON.stringify([]));
+    }
+  }, [path, id]); // eslint-disable-line
+
+  useEffect(() => {
     if (doneRecipes
       .map((recipe) => +recipe.id).includes(+id)) {
       setVisible(false);
@@ -124,12 +131,6 @@ function RecipeDetails({ match: { path, params: { id } } }) {
 
     // }]);
   };
-
-    if (!localStorage.getItem('favoriteRecipes')) {
-      localStorage.setItem('favoriteRecipes', JSON.stringify([]));
-    }
-  }, [path, id]); // eslint-disable-line
-  
   return (
     <div>
       <img

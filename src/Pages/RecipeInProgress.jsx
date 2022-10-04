@@ -14,7 +14,6 @@ function RecipeInProgress({ match: { path, params: { id } } }) {
 
   const getRecipe = async () => {
     const data = await fetchDetails(id, path.split('/')[1]);
-    console.log(data);
     setRecipe(data.find((rec) => rec));
   };
 
@@ -57,7 +56,6 @@ function RecipeInProgress({ match: { path, params: { id } } }) {
 
   return (
     <div>
-      {console.log(getIngredients())}
       <img
         src={ recipe[local === 'meals' ? 'strMealThumb' : 'strDrinkThumb'] }
         alt={ recipe[local === 'meals' ? 'strMeal' : 'strDrink'] }
@@ -81,22 +79,19 @@ function RecipeInProgress({ match: { path, params: { id } } }) {
           </p>
         </div>
         <div>
-          {getIngredients().map((ingredient, index) => {
-            console.log(recipe[ingredient]);
-            return (
-              <div
-                key={ index }
-                data-testid={ `${index}-ingredient-name-and-measure` }
-              >
-                <label htmlFor="#" data-testid={ `${index}-ingredient-step` }>
-                  <input type="checkbox" />
+          {getIngredients().map((ingredient, index) => (
+            <div
+              key={ index }
+              data-testid={ `${index}-ingredient-name-and-measure` }
+            >
+              <label htmlFor="#" data-testid={ `${index}-ingredient-step` }>
+                <input type="checkbox" />
 
-                  <div>{recipe[ingredient]}</div>
-                  <div>{recipe[getMeasures()[index]]}</div>
-                </label>
-              </div>
-            );
-          })}
+                <div>{recipe[ingredient]}</div>
+                <div>{recipe[getMeasures()[index]]}</div>
+              </label>
+            </div>
+          ))}
         </div>
         <div>
           <p data-testid="instructions">{recipe.strInstructions}</p>

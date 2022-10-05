@@ -1,18 +1,14 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import copy from 'clipboard-copy';
 import { fetchDetails, fetchName } from '../services/fetchAPI';
 import VideoComponent from '../components/VideoComponent';
 import RecipeCard from '../components/RecipeCard';
 import './RecipeDetails.css';
 // import DoneRecipes from './DoneRecipes';
 
-import arrowLeftIcon from '../images/arrow-left.svg';
-import shareIcon from '../images/share.svg';
-import whiteHeartIcon from '../images/whiteHeartIcon.svg';
-import blackHeartIcon from '../images/blackHeartIcon.svg';
 import AppContext from '../context/AppContext';
+import OptionBar from '../components/OptionBar';
 
 const MAX_RECOMENDATIONS = 6;
 
@@ -24,7 +20,6 @@ function RecipeDetails({ match: { path, params: { id } } }) {
   const [visible, setVisible] = useState(true);
   const [continueRecipe, setContinueRecipe] = useState(false);
   const [favorite, setFavorite] = useState(false);
-  const [copied, setCopied] = useState();
 
   const { objectToFavorite, doneRecipes,
     savedFavorites,
@@ -53,15 +48,6 @@ function RecipeDetails({ match: { path, params: { id } } }) {
     getRecipeDetails();
     getRecomendations();
     setLocal(path.split('/')[1]);
-  };
-
-  const goBack = () => {
-    history.goBack();
-  };
-
-  const copyLinkToShare = () => {
-    copy(`http://localhost:3000${history.location.pathname}`);
-    setCopied(true);
   };
 
   const btnFavoriteRecipe = () => {
@@ -118,43 +104,12 @@ function RecipeDetails({ match: { path, params: { id } } }) {
         data-testid="recipe-photo"
       />
 
-      <section>
-        <div>
-          <button
-            type="button"
-            onClick={ goBack }
-          >
-            <img src={ arrowLeftIcon } alt="back icon" />
-          </button>
-        </div>
-
-        <div>
-          {
-            copied
-              ? <p>Link copied!</p>
-              : (
-                <button
-                  type="button"
-                  data-testid="share-btn"
-                  onClick={ copyLinkToShare }
-                >
-                  <img src={ shareIcon } alt="share icon" />
-                </button>)
-          }
-        </div>
-        <div>
-          <button
-            type="button"
-            onClick={ btnFavoriteRecipe }
-          >
-            <img
-              src={ favorite ? blackHeartIcon : whiteHeartIcon }
-              alt="shareIcon"
-              data-testid="favorite-btn"
-            />
-          </button>
-        </div>
-      </section>
+      <OptionBar
+        btnFavoriteRecipe={ btnFavoriteRecipe }
+        favorite={ favorite }
+        id={ id }
+        local={ local }
+      />
 
       <section>
         <hr />

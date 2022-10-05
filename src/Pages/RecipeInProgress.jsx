@@ -7,10 +7,10 @@ import AppContext from '../context/AppContext';
 import IngredientCard from '../components/IngredientCard';
 
 function RecipeInProgress({ match: { path, params: { id } } }) {
-  const progress = JSON.parse(localStorage.getItem('inProgressRecipes'));
+  // const progress = JSON.parse(localStorage.getItem('inProgressRecipes'));
   const { objectToFavorite, savedFavorites } = useContext(AppContext);
 
-  const [saved, setSaved] = useState(progress || { meals: {}, drinks: {} });
+  const [saved, setSaved] = useState({ meals: {}, drinks: {} });
   const [recipe, setRecipe] = useState([]);
   const [local, setLocal] = useState('');
   const [favorite, setFavorite] = useState(false);
@@ -55,8 +55,12 @@ function RecipeInProgress({ match: { path, params: { id } } }) {
   }, [savedFavorites]); // eslint-disable-line
 
   useEffect(() => {
-    localStorage.setItem('inProgressRecipes', JSON.stringify(saved));
-  }, [saved]);
+    console.log(JSON.parse(localStorage.getItem('inProgressRecipes')));
+    if (JSON.parse(localStorage.getItem('inProgressRecipes'))) {
+      const progress = JSON.parse(localStorage.getItem('inProgressRecipes'));
+      setSaved(progress);
+    }
+  }, []);
 
   return (
     <div>

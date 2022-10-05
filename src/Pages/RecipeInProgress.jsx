@@ -4,10 +4,13 @@ import PropTypes from 'prop-types';
 import { fetchDetails } from '../services/fetchAPI';
 import OptionBar from '../components/OptionBar';
 import AppContext from '../context/AppContext';
+import IngredientCard from '../components/IngredientCard';
 
 function RecipeInProgress({ match: { path, params: { id } } }) {
+  const progress = JSON.parse(localStorage.getItem('inProgressRecipes'));
   const { objectToFavorite, savedFavorites } = useContext(AppContext);
 
+  const [saved, setSaved] = useState(progress || { meals: {}, drinks: {} });
   const [recipe, setRecipe] = useState([]);
   const [local, setLocal] = useState('');
   const [favorite, setFavorite] = useState(false);
@@ -24,9 +27,6 @@ function RecipeInProgress({ match: { path, params: { id } } }) {
 
   const getIngredients = () => Object.keys(recipe)
     .filter((key) => key.includes('Ingredient')).filter((item) => recipe[item]);
-
-  const getMeasures = () => Object.keys(recipe)
-    .filter((key) => key.includes('Measure')).filter((item) => recipe[item]);
 
   const btnFavoriteRecipe = () => {
     if (favorite) {
@@ -54,6 +54,10 @@ function RecipeInProgress({ match: { path, params: { id } } }) {
     }
   }, [savedFavorites]); // eslint-disable-line
 
+  useEffect(() => {
+    localStorage.setItem('inProgressRecipes', JSON.stringify(saved));
+  }, [saved]);
+
   return (
     <div>
       <img
@@ -80,17 +84,15 @@ function RecipeInProgress({ match: { path, params: { id } } }) {
         </div>
         <div>
           {getIngredients().map((ingredient, index) => (
-            <div
-              key={ index }
-              data-testid={ `${index}-ingredient-name-and-measure` }
-            >
-              <label htmlFor="#" data-testid={ `${index}-ingredient-step` }>
-                <input type="checkbox" />
-
-                <div>{recipe[ingredient]}</div>
-                <div>{recipe[getMeasures()[index]]}</div>
-              </label>
-            </div>
+            <IngredientCard
+              key={ ingredient }
+              index={ index }
+              ingredient={ ingredient }
+              recipe={ recipe }
+              local={ local }
+              setSaved={ setSaved }
+              saved={ saved }
+            />
           ))}
         </div>
         <div>

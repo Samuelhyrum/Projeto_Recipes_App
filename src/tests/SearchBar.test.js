@@ -200,6 +200,15 @@ describe('testing requirement 9', () => {
     userEvent.click(FILTER_BUTTON);
 
     await waitFor(() => expect(history.location.pathname).toBe('/meals/53013'));
+
+    const ButtonBack = await screen.findByRole('img', { name: /back icon/i });
+
+    expect(ButtonBack).toHaveAttribute('src', 'arrow-left.svg');
+    expect(ButtonBack).toBeInTheDocument();
+
+    userEvent.click(ButtonBack);
+
+    await waitFor(() => expect(history.location.pathname).toBe('/meals/53013'));
   });
   test('testing if when there is a click on the options "ingredients" ', async () => {
     renderWithRouter(<App />, { initialEntries: [pathHome],

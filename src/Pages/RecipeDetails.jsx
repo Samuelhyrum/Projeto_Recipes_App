@@ -209,7 +209,7 @@ function RecipeDetails({ match: { path, params: { id } } }) {
       {visible ? (
         <button
           type="button"
-          className={ visible ? 'visible' : 'hidden' }
+          className="visible"
           data-testid="start-recipe-btn"
           onClick={ handleClick }
         >

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
-function IngredientCard({ index, ingredient, recipe, local, setSaved, saved }) {
+function IngredientCard({ index, ingredient, recipe, local, saved }) {
   const [checked, setChecked] = useState(false);
 
   const getMeasures = () => Object.keys(recipe)
@@ -20,10 +20,9 @@ function IngredientCard({ index, ingredient, recipe, local, setSaved, saved }) {
         [local]: {
           ...savedRecipe,
           [recipe[id]]: savedIngredients.filter((item) => item !== target.name) } };
-      setSaved(newObj);
-      // localStorage.setItem('inProgressRecipes', JSON.stringify(newObj));
+      localStorage.setItem('inProgressRecipes', JSON.stringify(newObj));
+      // setSaved(newObj);
     } else {
-      console.log(target);
       setChecked(!checked);
       const inProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
       const savedIngredients = inProgress[local][recipe[id]]
@@ -37,23 +36,23 @@ function IngredientCard({ index, ingredient, recipe, local, setSaved, saved }) {
             ...savedIngredients,
             target.name,
           ] } };
-      setSaved(newObj);
-      // localStorage.setItem('inProgressRecipes', JSON.stringify(newObj));
+      localStorage.setItem('inProgressRecipes', JSON.stringify(newObj));
+      // setSaved(newObj);
     }
   };
 
   useEffect(() => {
     const id = local === 'meals' ? 'idMeal' : 'idDrink';
+    console.log(saved[local][recipe[id]]);
     const savedIngredients = saved[local][recipe[id]]
       ? saved[local][recipe[id]] : [];
+    console.log(savedIngredients.includes(ingredient));
     if (savedIngredients.includes(ingredient)) {
       setChecked(true);
     } else {
       setChecked(false);
     }
-    console.log(savedIngredients);
   }, []);
-
   return (
     <div
       data-testid={ `${index}-ingredient-name-and-measure` }
@@ -79,7 +78,7 @@ IngredientCard.propTypes = {
   ingredient: PropTypes.string.isRequired,
   recipe: PropTypes.shape().isRequired,
   local: PropTypes.string.isRequired,
-  setSaved: PropTypes.func.isRequired,
+  // setSaved: PropTypes.func.isRequired,
   saved: PropTypes.shape().isRequired,
 };
 

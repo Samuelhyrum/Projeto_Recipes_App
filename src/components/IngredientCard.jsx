@@ -52,7 +52,7 @@ function IngredientCard({ index, ingredient, recipe, local, saved }) {
     } else {
       setChecked(false);
     }
-  }, []);
+  }, []); // eslint-disable-line
   return (
     <div
       data-testid={ `${index}-ingredient-name-and-measure` }

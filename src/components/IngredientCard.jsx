@@ -80,6 +80,7 @@ IngredientCard.propTypes = {
   recipe: PropTypes.shape().isRequired,
   local: PropTypes.string.isRequired,
   setSaved: PropTypes.func.isRequired,
+  saved: PropTypes.shape().isRequired,
 };
 
 export default IngredientCard;

@@ -55,7 +55,6 @@ function RecipeInProgress({ match: { path, params: { id } } }) {
   }, [savedFavorites]); // eslint-disable-line
 
   useEffect(() => {
-    console.log(JSON.parse(localStorage.getItem('inProgressRecipes')));
     if (JSON.parse(localStorage.getItem('inProgressRecipes'))) {
       const progress = JSON.parse(localStorage.getItem('inProgressRecipes'));
       setSaved(progress);
@@ -95,7 +94,7 @@ function RecipeInProgress({ match: { path, params: { id } } }) {
               recipe={ recipe }
               local={ local }
               setSaved={ setSaved }
-              saved={ saved }
+              saved={ saved[local][id] || [] }
             />
           ))}
         </div>

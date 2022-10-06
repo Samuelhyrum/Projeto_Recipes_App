@@ -95,7 +95,7 @@ function RecipeInProgress({ match: { path, params: { id } } }) {
               recipe={ recipe }
               local={ local }
               setSaved={ setSaved }
-              saved={ saved }
+              saved={ saved[local][id] || [] }
             />
           ))}
         </div>

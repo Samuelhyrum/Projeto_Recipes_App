@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 function IngredientCard({ index, ingredient, recipe, local, saved }) {
-  const [checked, setChecked] = useState(false);
+  const [checked, setChecked] = useState(saved.some((i) => i === ingredient));
 
   const getMeasures = () => Object.keys(recipe)
     .filter((key) => key.includes('Measure')).filter((item) => recipe[item]);
@@ -41,18 +41,6 @@ function IngredientCard({ index, ingredient, recipe, local, saved }) {
     }
   };
 
-  useEffect(() => {
-    const id = local === 'meals' ? 'idMeal' : 'idDrink';
-    console.log(saved[local][recipe[id]]);
-    const savedIngredients = saved[local][recipe[id]]
-      ? saved[local][recipe[id]] : [];
-    console.log(savedIngredients.includes(ingredient));
-    if (savedIngredients.includes(ingredient)) {
-      setChecked(true);
-    } else {
-      setChecked(false);
-    }
-  }, []); // eslint-disable-line
   return (
     <div
       data-testid={ `${index}-ingredient-name-and-measure` }
@@ -61,7 +49,7 @@ function IngredientCard({ index, ingredient, recipe, local, saved }) {
         <input
           type="checkbox"
           name={ ingredient }
-          defaultChecked={ checked }
+          checked={ checked }
           onChange={ handleChecked }
           className={ checked ? 'checked' : '' }
         />
@@ -78,7 +66,6 @@ IngredientCard.propTypes = {
   ingredient: PropTypes.string.isRequired,
   recipe: PropTypes.shape().isRequired,
   local: PropTypes.string.isRequired,
-  // setSaved: PropTypes.func.isRequired,
   saved: PropTypes.shape().isRequired,
 };
 

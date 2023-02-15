@@ -22,5 +22,3 @@ Não deixe de usar nossas dicas de escrita de README de projetos, e deixe sua cr
 
   O layout tem como foco dispositivos móveis, dessa forma todos os protótipos vão estar desenvolvidos em telas menores.
 </details>
-
-<details>
